@@ -17,18 +17,18 @@ Python Tabanlı Dilin Kullanımı Snakemake, iş akışlarını tanımlamak içi
 
 Örnek;
 ```
+rule all:
+    input:
+        "sonuclar/dosya1.txt",
+        "sonuclar/dosya2.txt"
 
 rule ornek_kural:
     input:
-        "veri/*.txt"
+        "veri/dosya1.txt"
     output:
-        "sonuclar/*.txt"
+        "sonuclar/dosya1.txt"
     shell:
         "cat {input} > {output}"
-rule all:
-    input:
-        "sonuclar/*.txt",
-        "sonuclar/*.txt"
 
 ```
 Bu örnekte, ornek_kural adlı bir kural tanımlanmıştır. Bu kural, veri/dosya1.txt dosyasını okur ve içeriğini sonuclar/dosya1.txt dosyasına yazar. all kuralı ise, tüm iş akışının tamamlanmasını sağlar ve belirtilen tüm dosyaların oluşturulmasını bekler.
