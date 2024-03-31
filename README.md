@@ -16,21 +16,25 @@ Python Tabanlı Dilin Kullanımı Snakemake, iş akışlarını tanımlamak içi
 
 
 Örnek;
+
 ```
+echo "rule fastqc:
+    input: 
+        "data/ERR4082748_1.fastq"
+    output:
+        html="results/fastqc_report.html",
+        zip="results/fastqc_report.zip"
+    shell:
+        "fastqc {input} --outdir results"
 rule all:
     input:
-        "sonuclar/dosya1.txt",
-        "sonuclar/dosya2.txt"
-
-rule ornek_kural:
-    input:
-        "veri/dosya1.txt"
-    output:
-        "sonuclar/dosya1.txt"
-    shell:
-        "cat {input} > {output}"
+        "results/fastqc_report.html"" > Snakefile
+```
 
 ```
+snakemake
+```
+
 Bu örnekte, ornek_kural adlı bir kural tanımlanmıştır. Bu kural, veri/dosya1.txt dosyasını okur ve içeriğini sonuclar/dosya1.txt dosyasına yazar. all kuralı ise, tüm iş akışının tamamlanmasını sağlar ve belirtilen tüm dosyaların oluşturulmasını bekler.
 #### İş Akışı Yönetimi:
 Snakefile adı verilen bir dosya üzerinden gerçekleştirilir. Bu dosya, iş akışınızı tanımlayan kuralların bir koleksiyonunu içerir. Her kural, belirli bir görevi temsil eder ve bu görevin girdileri, çıktıları ve nasıl gerçekleştirileceği hakkında bilgi içerir.
