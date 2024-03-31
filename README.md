@@ -36,7 +36,8 @@ rule all:
 snakemake
 ```
 
-Bu örnekte, ornek_kural adlı bir kural tanımlanmıştır. Bu kural, veri/dosya1.txt dosyasını okur ve içeriğini sonuclar/dosya1.txt dosyasına yazar. all kuralı ise, tüm iş akışının tamamlanmasını sağlar ve belirtilen tüm dosyaların oluşturulmasını bekler.
+Bu örnekte, fastqc adlı bir kural tanımlanmıştır. Bu kural, data/ERR4082748_1.fastq dosyasını okur ve içeriğini hem html hem de zip dosyası olarak results/fastqc_report.html/zip dosyasına yazar. all kuralı ise, tüm iş akışının tamamlanmasını sağlar ve belirtilen tüm dosyaların oluşturulmasını bekler.
+
 #### İş Akışı Yönetimi:
 Snakefile adı verilen bir dosya üzerinden gerçekleştirilir. Bu dosya, iş akışınızı tanımlayan kuralların bir koleksiyonunu içerir. Her kural, belirli bir görevi temsil eder ve bu görevin girdileri, çıktıları ve nasıl gerçekleştirileceği hakkında bilgi içerir.
 Snakemake, bu Snakefile ‘ı okur ve belirtilen kuralları ve bağımlılıkları analiz eder. Ardından, belirtilen çıktı dosyalarını oluşturmak için gereken kuralları otomatik olarak belirler ve çalıştırır. Bu süreç, iş akışının otomatik olarak yönetilmesini sağlar.
