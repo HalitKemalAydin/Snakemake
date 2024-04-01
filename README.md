@@ -20,15 +20,12 @@ Python Tabanlı Dilin Kullanımı Snakemake, iş akışlarını tanımlamak içi
 ```
 echo "rule fastqc:
     input: 
-        \"data/ERR4082748_1.fastq\"
+        "data/{sample}.fastq"
     output:
-        html=\"results/fastqc_report.html\",
-        zip=\"results/fastqc_report.zip\"
+        html="results/{sample}.html",
+        zip="results/{sample}.zip"
     shell:
-        \"fastqc {input} --outdir results\"
-rule all:
-    input:
-        \"results/fastqc_report.html\"" > Snakefile
+        "fastqc {input} --outdir results"" > Snakefile
 
 ```
 
