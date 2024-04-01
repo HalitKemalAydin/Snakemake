@@ -68,3 +68,67 @@ Avantajları
 Otomatik Bağımlılık Çözümleme: Snakemake, kurallar arasındaki bağımlılıkları otomatik olarak çözer. Bu, iş akışınızın düzgün bir şekilde çalışmasını sağlar.
 Esneklik: Snakemake, iş akışlarını özelleştirmek için Python dilinin tüm özelliklerini kullanabilir. Bu, karmaşık iş akışlarını tanımlamayı ve yönetmeyi kolaylaştırır.
 Entegrasyon: Snakemake, iş paketi yöneticisi (conda) ile entegre olarak çalışabilir. Bu, iş akışınızda gereken tüm yazılımların ve kütüphanelerin otomatik olarak yüklenmesini sağlar.
+
+# Snakemake
+
+## Conda ile Snakemake Kurulumu:
+
+Snakemake aracını kurmak için 'Conda' kullanıyorum. Conda nedir ve nasıl kullanılır bu adreste anlattım. -> 'https://github.com/HalitKemalAydin/Conda_Guide'
+
+Snakemake i kurmak için öncelikle yeni ortam oluşturuyorum.
+
+```
+conda create -n snakemake
+```
+
+Ardından oluşturduğum ortama geçiyorum.
+
+```
+conda activate snakemake
+```
+
+Şimdi 'Conda' kullanarak 'snakemake' i kuruyorum.
+
+```
+conda install -c bioconda snakemake
+```
+Snakemake başarıyla kuruldu. Örnek bir iş hattı oluşturacağım. Bu iş hattında 'fastqc' aracını kullanacağım için onu da kuruyorum.
+
+```
+conda install -c bioconda fastqc
+```
+
+İş hattı ,pipeline, oluşturmak ve çalıştırmak için 'Snakefile' dosyası oluşturuyorum. 
+
+```
+touch Snakefile
+```
+Oluşturduğum boş Snakefile dosyasını düzenlemek için;
+
+```
+nano Snakefile
+```
+
+İş hattı oluşturmamız için bir kural tanımlamamız gerekiyor, tanımlama; 'rule', 'input', 'output', 'shell' gibi komutlar ile  yapılır.
+rule > kural
+input > girdi
+output > çıktı
+shell > işlem
+
+Bu iş hattında girdi olarak 'data' adlı dizin içerisinde bulunan 'fastq' uzantılı dosyaları kullanacağım. Kuralımı tanımlarken spesifik isim yerine uzantısına göre almasını istediğim için '{}' kullanıyorum.
+Fastqc aracının çıktılarının uzantısı 'html', 'zip' ya da her ikisi oluyor. Burda da aynı şekilde girdide olduğu gibi '{}' kullanıyorum. 
+Shell için kullanacağım işlemi belirtiyorum.
+
+```
+rule fastqc:
+    input: 
+        "data/{sample}.fastq"
+    output:
+        html="results/{sample}.html",
+        zip="results/{sample}.zip"
+    shell:
+        "fastqc {input} --outdir results"
+```
+
+
+  
