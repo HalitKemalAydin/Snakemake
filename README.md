@@ -46,7 +46,7 @@ Entegrasyon: Snakemake, iş paketi yöneticisi (conda) ile entegre olarak çalı
 
 ## Conda ile Snakemake Kurulumu:
 
-Snakemake aracını kurmak için 'Conda' kullanıyorum. Conda nedir ve nasıl kullanılır bu adreste anlattım. -> 'https://github.com/HalitKemalAydin/Conda_Guide'
+Snakemake aracını kurmak için 'Conda' kullanıyorum. [Conda nedir ve nasıl kullanılır ?](https://github.com/HalitKemalAydin/Conda_Guide) -> 'https://github.com/HalitKemalAydin/Conda_Guide'
 
 Snakemake i kurmak için öncelikle yeni ortam oluşturuyorum.
 
