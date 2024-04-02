@@ -14,27 +14,6 @@ Paralellik: Snakemake, birden çok kuralı aynı anda çalıştırabilir. Bu, ö
 Esneklik: Snakemake, iş akışlarını özelleştirmek için Python dilinin tüm özelliklerini kullanabilir. Bu, karmaşık iş akışlarını tanımlamayı ve yönetmeyi kolaylaştırır.
 Python Tabanlı Dilin Kullanımı Snakemake, iş akışlarını tanımlamak için Python tabanlı bir dil kullanır. Bu dil, Python dilinin tüm özelliklerini destekler, bu da iş akışlarını özelleştirmeyi ve karmaşık iş akışlarını tanımlamayı kolaylaştırır. 
 
-
-Örnek;
-
-```
-echo "rule fastqc:
-    input: 
-        "data/{sample}.fastq"
-    output:
-        html="results/{sample}.html",
-        zip="results/{sample}.zip"
-    shell:
-        "fastqc {input} --outdir results"" > Snakefile
-
-```
-
-```
-snakemake
-```
-
-Bu örnekte, fastqc adlı bir kural tanımlanmıştır. Bu kural, data/ERR4082748_1.fastq dosyasını okur ve içeriğini hem html hem de zip dosyası olarak results/fastqc_report.html/zip dosyasına yazar. all kuralı ise, tüm iş akışının tamamlanmasını sağlar ve belirtilen tüm dosyaların oluşturulmasını bekler.
-
 #### İş Akışı Yönetimi:
 Snakefile adı verilen bir dosya üzerinden gerçekleştirilir. Bu dosya, iş akışınızı tanımlayan kuralların bir koleksiyonunu içerir. Her kural, belirli bir görevi temsil eder ve bu görevin girdileri, çıktıları ve nasıl gerçekleştirileceği hakkında bilgi içerir.
 Snakemake, bu Snakefile ‘ı okur ve belirtilen kuralları ve bağımlılıkları analiz eder. Ardından, belirtilen çıktı dosyalarını oluşturmak için gereken kuralları otomatik olarak belirler ve çalıştırır. Bu süreç, iş akışının otomatik olarak yönetilmesini sağlar.
@@ -52,12 +31,8 @@ Bu özellikler, Snakemake’ın YBH kümelerinde etkin bir şekilde çalışmas�
 #### Conda ile Entegrasyon:
 Snakemake, iş paketi yöneticisi olan Conda ile entegre bir şekilde çalışabilir. Bu entegrasyon, iş akışınızda gereken tüm yazılımların ve kütüphanelerin otomatik olarak yüklenmesini sağlar.
 Snakemake, Snakefile içerisinde her bir kural altında conda değişkeni ile .yaml dosyası verilerek iş akışında ki her bir görev için ayrı ortamları tanımlamaya olanak sağlar. Bu, her bir görevin gerektirdiği yazılımların ve kütüphanelerin otomatik olarak yüklenmesini ve yönetilmesini sağlar.
-Ayrıca, Snakemake’in 6.14.0 sürümünden itibaren, mevcut bir Conda ortamını kullanma özelliği de mevcuttur. Bu özellik, kuralların conda direktifine ortamın adını ekleyerek ve snakemake
+Ayrıca, Snakemake’in 6.14.0 sürümünden itibaren, mevcut bir Conda ortamını kullanma özelliği de mevcuttur.
 
-```
---use-conda 
-```
-komutunu kullanarak etkinleştirilebilir.
 Kullanım Alanları ve Avantajları:
 Kullanım Alanları
 Veri Analizi: Snakemake, veri analizi görevlerini otomatikleştirmek için sıklıkla kullanılır. Bu, genellikle büyük veri setleri ile çalışırken zaman kazandırır.
@@ -68,8 +43,6 @@ Avantajları
 Otomatik Bağımlılık Çözümleme: Snakemake, kurallar arasındaki bağımlılıkları otomatik olarak çözer. Bu, iş akışınızın düzgün bir şekilde çalışmasını sağlar.
 Esneklik: Snakemake, iş akışlarını özelleştirmek için Python dilinin tüm özelliklerini kullanabilir. Bu, karmaşık iş akışlarını tanımlamayı ve yönetmeyi kolaylaştırır.
 Entegrasyon: Snakemake, iş paketi yöneticisi (conda) ile entegre olarak çalışabilir. Bu, iş akışınızda gereken tüm yazılımların ve kütüphanelerin otomatik olarak yüklenmesini sağlar.
-
-# Snakemake
 
 ## Conda ile Snakemake Kurulumu:
 
@@ -92,7 +65,7 @@ conda activate snakemake
 ```
 conda install -c bioconda snakemake
 ```
-Snakemake başarıyla kuruldu. Örnek bir iş hattı oluşturacağım. Bu iş hattında 'fastqc' aracını kullanacağım için onu da kuruyorum.
+Snakemake'i kurduktan sonra örnek bir iş hattı oluşturacağım. Bu iş hattında 'fastqc' aracını kullanacağım için onu da kuruyorum.
 
 ```
 conda install -c bioconda fastqc
@@ -109,14 +82,15 @@ Oluşturduğum boş Snakefile dosyasını düzenlemek için;
 nano Snakefile
 ```
 
-İş hattı oluşturmamız için bir kural tanımlamamız gerekiyor, tanımlama; 'rule', 'input', 'output', 'shell' gibi komutlar ile  yapılır.
+İş hattı oluşturmamız için bir kural tanımlamamız gerekiyor, tanımlama; 'rule', 'input', 'output', 'shell' gibi komutlar ile yapılır.
 #### rule > kural
 #### input > girdi
 #### output > çıktı
 #### shell > işlem
 
 Bu iş hattında girdi olarak 'data' adlı dizin içerisinde bulunan 'fastq' uzantılı dosyaları kullanacağım. Kuralımı tanımlarken spesifik isim yerine uzantısına göre almasını istediğim için '{}' kullanıyorum.
-Fastqc aracının çıktılarının uzantısı 'html', 'zip' ya da her ikisi oluyor. Çıktıda da aynı şekilde girdide olduğu gibi '{}' kullanıyorum. 
+Çıktı için de aynı şekilde '{}' kullanıyorum. (Burada '{}' parantezin içinde ne yazdığı önemli değil ama tümünün aynı olması gereklidir.)
+Fastqc aracının çıktılarının uzantısı 'html' ve 'zip' olur, bu yüzden 'html=' ve 'zip=' olarak çıktıda belirtiyorum.
 Shell için kullanacağım işlemi belirtiyorum.
 
 ```
