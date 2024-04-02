@@ -1,9 +1,9 @@
+
 rule fastqc:
-    input: 
+    input:
         "data/{sample}.fastq"
     output:
-        "html=results/{sample}.html",
-        "zip=results/{sample}.zip"
+        html="{sample}.html"
+        zip="{sample}.zip"
     shell:
-        "fastqc {input} --outdir results"
-        
+        "{input} --outdir results"
