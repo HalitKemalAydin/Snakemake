@@ -135,9 +135,8 @@ Ben de 'data' dizini içinde bulunan dosyalardan kullanmak istediğimi çıktı 
 Kodumda snakemake'in hangi shell komutlarını çalıştıracağını görmek için '-np' seçeneğini de kullanıyorum.
 
 ```
-![snakmake -np results/ERR4082748_1.html](https://)
+snakmake -np results/ERR4082748_1.html
 ```
 
-
-
+![alt text](image.png)
   
