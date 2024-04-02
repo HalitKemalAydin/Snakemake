@@ -46,9 +46,9 @@ Entegrasyon: Snakemake, iş paketi yöneticisi (conda) ile entegre olarak çalı
 
 ## Conda ile Snakemake Kurulumu:
 
-Snakemake aracını kurmak için 'Conda' kullanıyorum. [Conda nedir ve nasıl kullanılır ?](https://github.com/HalitKemalAydin/Conda_Guide) -> 'https://github.com/HalitKemalAydin/Conda_Guide'
+Snakemake aracını kurmak için 'Conda' kullanıyorum. [Conda nedir ve nasıl kullanılır ?](https://github.com/HalitKemalAydin/Conda_Guide)
 
-Snakemake i kurmak için öncelikle yeni ortam oluşturuyorum.
+Snakemake'i kurmak için öncelikle yeni ortam oluşturuyorum.
 
 ```
 conda create -n snakemake
@@ -60,7 +60,7 @@ Ardından oluşturduğum ortama geçiyorum.
 conda activate snakemake
 ```
 
-Şimdi 'Conda' kullanarak 'snakemake' i kuruyorum.
+Şimdi 'Conda' kullanarak snakemake'i kuruyorum.
 
 ```
 conda install -c bioconda snakemake
@@ -71,7 +71,7 @@ Snakemake'i kurduktan sonra örnek bir iş hattı oluşturacağım. Bu iş hatt�
 conda install -c bioconda fastqc
 ```
 
-İş hattı ,pipeline, oluşturmak ve çalıştırmak için 'Snakefile' dosyası oluşturuyorum. 
+İş hattı -pipeline- oluşturmak ve çalıştırmak için 'Snakefile' dosyası oluşturuyorum. 
 
 ```
 touch Snakefile
