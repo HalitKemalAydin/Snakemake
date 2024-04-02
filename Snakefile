@@ -3,7 +3,7 @@ rule fastqc:
     input:
         "data/{sample}.fastq"
     output:
-        html="{sample}.html"
-        zip="{sample}.zip"
+        html="results/{sample}.html"
+        zip="results/{sample}.zip"
     shell:
-        "{input} --outdir results"
+        "fastqc {input} --outdir results"
