@@ -5,6 +5,6 @@ rule fastqc:
         html="results/{sample}.html",
         zip="results/{sample}.zip"
     shell:
-        "fastqc {input} --output results"
+        "fastqc {input} --outdir results"
 
 
