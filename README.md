@@ -123,5 +123,5 @@ Kodumda snakemake'in hangi shell komutlarını çalıştıracağını görmek i�
 snakmake -np results/ERR4082748_1.html
 ```
 
-![alt text](image.png)
+![alt text](ERR4082748_1.html.png)
   
