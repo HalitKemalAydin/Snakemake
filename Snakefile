@@ -1,4 +1,3 @@
-
 rule fastqc:
     input: 
         "data/{sample}.fastq"
@@ -7,5 +6,3 @@ rule fastqc:
         zip="results/{sample}.zip"
     shell:
         "fastqc {input} --outdir results"
-
-        
