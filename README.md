@@ -116,7 +116,7 @@ output > çıktı
 shell > işlem
 
 Bu iş hattında girdi olarak 'data' adlı dizin içerisinde bulunan 'fastq' uzantılı dosyaları kullanacağım. Kuralımı tanımlarken spesifik isim yerine uzantısına göre almasını istediğim için '{}' kullanıyorum.
-Fastqc aracının çıktılarının uzantısı 'html', 'zip' ya da her ikisi oluyor. Burda da aynı şekilde girdide olduğu gibi '{}' kullanıyorum. 
+Fastqc aracının çıktılarının uzantısı 'html', 'zip' ya da her ikisi oluyor. Çıktıda da aynı şekilde girdide olduğu gibi '{}' kullanıyorum. 
 Shell için kullanacağım işlemi belirtiyorum.
 
 ```
@@ -129,6 +129,15 @@ rule fastqc:
     shell:
         "fastqc {input} --outdir results"
 ```
+Snakefile'ımı yazdıktan sonra kaydediyorum. 
+İş hattını çalıştırmak için "snakemake" komutu kullanılır. Ancak bu iş hattında snakemake'in oluşturması gereken hedefi belirtmemiz gerekiyor. Hedef olarak çıktı istenilen çıktı dosyası veya dosyaları olmalıdır.
+Ben de 'data' dizini içinde bulunan dosyalardan kullanmak istediğimi çıktı olarak belirtiyorum. 
+Kodumda snakemake'in hangi shell komutlarını çalıştıracağını görmek için '-np' seçeneğini de kullanıyorum.
+
+```
+![snakmake -np results/ERR4082748_1.html](https://)
+```
+
 
 
   
