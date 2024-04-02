@@ -58,6 +58,7 @@ Snakemake, iş paketi yöneticisi (conda) ile entegre olarak çalışabilir. Bu,
 
 Snakemake aracını kurmak için 'Conda' kullanıyorum. [Conda nedir ve nasıl kullanılır ?](https://github.com/HalitKemalAydin/Conda_Guide)
 
+### Ortam Oluşturma:
 Snakemake'i kurmak için öncelikle yeni ortam oluşturuyorum.
 
 ```
@@ -69,7 +70,7 @@ Ardından oluşturduğum ortama geçiyorum.
 ```
 conda activate snakemake
 ```
-
+### Snakemake kurulumu:
 Şimdi 'Conda' kullanarak snakemake'i kuruyorum.
 
 ```
@@ -80,7 +81,7 @@ Snakemake'i kurduktan sonra örnek bir iş hattı oluşturacağım. Bu iş hatt�
 ```
 conda install -c bioconda fastqc
 ```
-
+### Snakefile Oluşturma ve Düzenleme:
 İş hattı -pipeline- oluşturmak ve çalıştırmak için 'Snakefile' dosyası oluşturuyorum. 
 
 ```
@@ -91,12 +92,12 @@ Oluşturduğum boş Snakefile dosyasını düzenlemek için;
 ```
 nano Snakefile
 ```
-
+### İş Hattı -Pipeline-
 İş hattı oluşturmamız için bir kural tanımlamamız gerekiyor, tanımlama; 'rule', 'input', 'output', 'shell' gibi komutlar ile yapılır.
-##### rule > kural
-##### input > girdi
-##### output > çıktı
-##### shell > işlem
+###### rule > kural
+###### input > girdi
+###### output > çıktı
+###### shell > işlem
 
 Bu iş hattında girdi olarak 'data' adlı dizin içerisinde bulunan 'fastq' uzantılı dosyaları kullanacağım. Kuralımı tanımlarken spesifik isim yerine uzantısına göre almasını istediğim için '{}' kullanıyorum.
 Çıktı için de aynı şekilde '{}' kullanıyorum. (Burada '{}' parantezin içinde ne yazdığı önemli değil ama tümünün aynı olması gereklidir.)
