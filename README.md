@@ -124,4 +124,13 @@ snakmake -np results/ERR4082748_1.html
 ```
 
 ![alt text](images/ERR4082748_1.html.png)
-  
+
+Kodu bir de normal çalıştırıyorum.
+
+```
+snakemake -np results/ERR4082748_1.html
+```
+Sonucumuzu görebilmek için;
+
+İşte Fastqc işlem sonucumuz.
+![alt text](images/ERR4082748fastqc_1.png)
