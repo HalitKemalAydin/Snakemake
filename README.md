@@ -8,10 +8,14 @@ Sonuç olarak, Snakemake, veri analizlerinin daha etkin, hızlı ve düzenli bir
 #### Çalışma Prensipleri ve Python:
 Snakemake, iş akışlarını tanımlamak ve yönetmek için Python tabanlı bir dil kullanır.
 ##### Çalışma Prensipleri
-##### Kurallar: Snakemake, iş akışlarını tanımlamak için kurallar kullanır. Her kural, bir veya daha fazla çıktı dosyası oluşturmak için gerekli olan girdi dosyalarını ve uygulanacak komutları belirtir.
-##### Bağımlılıklar: Snakemake, kurallar arasındaki bağımlılıkları otomatik olarak çözer. Bu, bir kuralın çıktılarının başka bir kuralın girdileri olduğu durumlarda gerçekleşir.
-##### Paralellik: Snakemake, birden çok kuralı aynı anda çalıştırabilir. Bu, özellikle büyük veri setleri ile çalışırken zaman kazandırır.
-##### Esneklik: Snakemake, iş akışlarını özelleştirmek için Python dilinin tüm özelliklerini kullanabilir. Bu, karmaşık iş akışlarını tanımlamayı ve yönetmeyi kolaylaştırır. Python Tabanlı Dilin Kullanımı Snakemake, iş akışlarını tanımlamak için Python tabanlı bir dil kullanır. Bu dil, Python dilinin tüm özelliklerini destekler, bu da iş akışlarını özelleştirmeyi ve karmaşık iş akışlarını tanımlamayı kolaylaştırır. 
+##### Kurallar: 
+Snakemake, iş akışlarını tanımlamak için kurallar kullanır. Her kural, bir veya daha fazla çıktı dosyası oluşturmak için gerekli olan girdi dosyalarını ve uygulanacak komutları belirtir.
+##### Bağımlılıklar: 
+Snakemake, kurallar arasındaki bağımlılıkları otomatik olarak çözer. Bu, bir kuralın çıktılarının başka bir kuralın girdileri olduğu durumlarda gerçekleşir.
+##### Paralellik: 
+Snakemake, birden çok kuralı aynı anda çalıştırabilir. Bu, özellikle büyük veri setleri ile çalışırken zaman kazandırır.
+##### Esneklik: 
+Snakemake, iş akışlarını özelleştirmek için Python dilinin tüm özelliklerini kullanabilir. Bu, karmaşık iş akışlarını tanımlamayı ve yönetmeyi kolaylaştırır. Python Tabanlı Dilin Kullanımı Snakemake, iş akışlarını tanımlamak için Python tabanlı bir dil kullanır. Bu dil, Python dilinin tüm özelliklerini destekler, bu da iş akışlarını özelleştirmeyi ve karmaşık iş akışlarını tanımlamayı kolaylaştırır. 
 
 #### İş Akışı Yönetimi:
 Snakefile adı verilen bir dosya üzerinden gerçekleştirilir. Bu dosya, iş akışınızı tanımlayan kuralların bir koleksiyonunu içerir. Her kural, belirli bir görevi temsil eder ve bu görevin girdileri, çıktıları ve nasıl gerçekleştirileceği hakkında bilgi içerir.
@@ -34,14 +38,21 @@ Ayrıca, Snakemake’in 6.14.0 sürümünden itibaren, mevcut bir Conda ortamın
 
 #### Kullanım Alanları ve Avantajları:
 ##### Kullanım Alanları
-##### Veri Analizi: Snakemake, veri analizi görevlerini otomatikleştirmek için sıklıkla kullanılır. Bu, genellikle büyük veri setleri ile çalışırken zaman kazandırır.
-##### Biyoinformatik: Snakemake, biyoinformatik alanında sıklıkla kullanılır. Örneğin, gen dizileme verilerinin analizi gibi karmaşık iş akışları için kullanılabilir.
-##### Yüksek Başarımlı Hesaplama (YBH): Snakemake, YBH kümelerinde iş akışlarını yönetmek için kullanılır. Bu, büyük ölçekli veri analizlerinin hızlı ve etkin bir şekilde gerçekleştirilmesini sağlar.
+##### Veri Analizi: 
+Snakemake, veri analizi görevlerini otomatikleştirmek için sıklıkla kullanılır. Bu, genellikle büyük veri setleri ile çalışırken zaman kazandırır.
+##### Biyoinformatik: 
+Snakemake, biyoinformatik alanında sıklıkla kullanılır. Örneğin, gen dizileme verilerinin analizi gibi karmaşık iş akışları için kullanılabilir.
+##### Yüksek Başarımlı Hesaplama (YBH): 
+Snakemake, YBH kümelerinde iş akışlarını yönetmek için kullanılır. Bu, büyük ölçekli veri analizlerinin hızlı ve etkin bir şekilde gerçekleştirilmesini sağlar.
 ##### Avantajları
-##### Ölçeklenebilirlik: Snakemake, iş akışlarınızı ölçeklendirebilir ve birden çok işlemci çekirdeğinde paralel olarak çalışabilir. Bu, büyük veri setleri ile çalışırken zaman kazandırır.
-##### Otomatik Bağımlılık Çözümleme: Snakemake, kurallar arasındaki bağımlılıkları otomatik olarak çözer. Bu, iş akışınızın düzgün bir şekilde çalışmasını sağlar.
-##### Esneklik: Snakemake, iş akışlarını özelleştirmek için Python dilinin tüm özelliklerini kullanabilir. Bu, karmaşık iş akışlarını tanımlamayı ve yönetmeyi kolaylaştırır.
-##### Entegrasyon: Snakemake, iş paketi yöneticisi (conda) ile entegre olarak çalışabilir. Bu, iş akışınızda gereken tüm yazılımların ve kütüphanelerin otomatik olarak yüklenmesini sağlar.
+##### Ölçeklenebilirlik: 
+Snakemake, iş akışlarınızı ölçeklendirebilir ve birden çok işlemci çekirdeğinde paralel olarak çalışabilir. Bu, büyük veri setleri ile çalışırken zaman kazandırır.
+##### Otomatik Bağımlılık Çözümleme: 
+Snakemake, kurallar arasındaki bağımlılıkları otomatik olarak çözer. Bu, iş akışınızın düzgün bir şekilde çalışmasını sağlar.
+##### Esneklik: 
+Snakemake, iş akışlarını özelleştirmek için Python dilinin tüm özelliklerini kullanabilir. Bu, karmaşık iş akışlarını tanımlamayı ve yönetmeyi kolaylaştırır.
+##### Entegrasyon: 
+Snakemake, iş paketi yöneticisi (conda) ile entegre olarak çalışabilir. Bu, iş akışınızda gereken tüm yazılımların ve kütüphanelerin otomatik olarak yüklenmesini sağlar.
 
 ## Conda ile Snakemake Kurulumu:
 
