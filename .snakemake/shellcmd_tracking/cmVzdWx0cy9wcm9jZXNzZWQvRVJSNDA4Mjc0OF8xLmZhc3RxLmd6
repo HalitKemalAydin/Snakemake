@@ -1,0 +1,1 @@
+cutadapt -q 38 -m 10 --trim-n -Z -j 1 -a AGATCGGAAGAG -A AGATCGGAAGAG -o results/processed/ERR4082748_1.fastq.gz -p results/processed/ERR4082748_2.fastq.gz data/raw/ERR4082748_1.fastq.gz data/raw/ERR4082748_2.fastq.gz
