@@ -32,3 +32,16 @@ rule fastqc_after_trim:
         "results/processed/{sample}_2.zip"
     shell:
         "fastqc {input} --outdir results/processed/"
+
+rule bwa_aln:
+    input:
+        ref= "data/ref/ornek_referans_genom.fna",
+        fastq1= "results/processed/{sample}_1.fastq.gz",
+        fastq2= "results/processed/{sample}_2.fastq.gz"
+    output:
+        sai1= "results/alignment/bwa/{sample}_1_p.sai",
+        sai2= "results/alignment/bwa/{sample}_2_p.sai"
+    threads: 4
+    shell:
+        "bwa aln -t {threads} {input.ref} {input.fastq1} > {output.sai1}
+        bwa aln -t {threads} {input.ref} {input.fastq2} > {output.sai2}"
