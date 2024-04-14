@@ -202,3 +202,10 @@ Kodu çalıştırmak için;
 ```
 snakemake results/processed/ERR4082748_1.html
 ```
+
+### 4.Adım: Referans Genom ile Hizalama "BWA"
+Bu aşamada filtrelediğimiz ve kesim yaptığımız fasta dosyalarını "fna" uzantılı referans genom ile hizalıyorum.
+
+```
+
+```
