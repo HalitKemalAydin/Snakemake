@@ -134,3 +134,71 @@ snakemake -np results/ERR4082748_1.html
 İşte Fastqc işlem sonucumuz.
 
 ![alt text](images/ERR4082748fastqc_1.png)
+
+# Hizalama İş Hattı / Sequence Pipeline
+
+### 1. Adım: Kalite Kontrol "Fastqc"
+İlk aşamada fasta dosyalarımızın kalite kontrolünü gerçekleştiriyorum.
+
+```
+rule fastqc:
+    input: 
+        "data/raw/{sample}_1.fastq.gz",
+        "data/raw/{sample}_2.fastq.gz"
+    output:
+        "results/fastqc-raw/{sample}_1.html",
+        "results/fastqc-raw/{sample}_1.zip",
+        "results/fastqc-raw/{sample}_2.html",
+        "results/fastqc-raw/{sample}_2.zip"
+    shell:
+        "fastqc {input} --outdir results/fastqc-raw"
+
+```
+Kodu çalıştırmak için;
+
+```
+snakemake results/fastqc-raw/ERR4082748_1.html
+```
+
+### 2.Adım: Adaptör Kesimi ve Filtreleme "Cutadapt"
+Bu aşamada ise kontrol ettiğimiz fasta dosyalarını filtreleyip adaptörleri kesiyorum.
+
+```
+rule cutadapt:
+    input:
+        "data/raw/{sample}_1.fastq.gz",
+        "data/raw/{sample}_2.fastq.gz"
+    output:
+        R1="results/processed/{sample}_1.fastq.gz",
+        R2="results/processed/{sample}_2.fastq.gz"
+    threads: 4
+    shell:
+        "cutadapt -q 20 -m 10 --trim-n -Z -j {threads} -a AGATCGGAAGAG -A AGATCGGAAGAG -o {output.R1} -p {output.R2} {input}"
+```
+Kodu çalıştırmak için;
+
+```
+snakemake results/processed/ERR4082748_1.fastq.gz
+```
+
+### 3.Adım: Kesim Sonrası Kalite Kontrol "Fastqc"
+Bu aşamada filtreleme ve kesimden sonra fasta dosyalarımızın son halinin kalite kontrolünü yapıyorum.
+
+```
+rule fastqc_after_trim:
+    input: 
+        "results/processed/{sample}_1.fastq.gz",
+        "results/processed/{sample}_2.fastq.gz"
+    output:
+        "results/processed/{sample}_1.html",
+        "results/processed/{sample}_1.zip",
+        "results/processed/{sample}_2.html",
+        "results/processed/{sample}_2.zip"
+    shell:
+        "fastqc {input} --outdir results/processed/"
+```
+Kodu çalıştırmak için;
+
+```
+snakemake results/processed/ERR4082748_1.html
+```
