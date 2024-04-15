@@ -223,3 +223,10 @@ rule bwa_aln:
     bwa aln -t {threads} {input.ref} {input.fastq2} > {output.sai2}
     """
 ```
+Kodu çalıştırmak için;
+
+```
+snakemake results/alignment/bwa/ERR4082748_1_p.sai
+```
+
+#### B)
