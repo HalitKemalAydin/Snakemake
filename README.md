@@ -194,7 +194,7 @@ snakemake results/processed/ERR4082748_1.html
 
 ### 4.Adım: Referans Genom ile Hizalama "BWA"
 #### A) SAI Dosyalarını Hazırlama:  
-Bu aşamada filtrelediğimiz ve kesim yaptığımız fasta dosyalarını "fna" uzantılı referans genom ile hizalamak için "sai" dosyalarımı oluşturuyorum.
+Bu aşamada filtrelediğimiz ve kesim yaptığımız fasta dosyalarını "fna" uzantılı referans genom ile hizalamak için önce "sai" dosyalarımı oluşturuyorum.
 
 ```
 rule bwa_aln:
