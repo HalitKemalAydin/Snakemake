@@ -1,18 +1,22 @@
 
+SAMPLE="ERR4082748"
+
 PREPROCESS=["results/fastqc-raw/ERR4082748_1.html", "results/fastqc-raw/ERR4082748_2.html", "results/fastqc-raw/ERR4082748_1.zip", "results/fastqc-raw/ERR4082748_2.zip"]
 
 CUTADAPT=["results/processed/ERR4082748_1.fastq.gz","results/processed/ERR4082748_2.fastq.gz"]
 
 AFTER_CUTADAPT=["results/processed/ERR4082748_1.html", "results/processed/ERR4082748_2.html", "results/processed/ERR4082748_1.zip", "results/processed/ERR4082748_2.zip"]
 
+INDEX=["data/ref/ornek_referans_genom.fna.bwt"]
+
 SAI=["results/alignment/bwa/ERR4082748_1_p.sai", "results/alignment/bwa/ERR4082748_2_p.sai"]
 
 rule all:
-	input:
-	    PREPROCESS,
-		CUTADAPT,
-		AFTER_CUTADAPT,
-		SAI
+	input: 
+           PREPROCESS,
+           CUTADAPT,
+           AFTER_CUTADAPT,
+           SAI
 
 rule preprocess:
     input: PREPROCESS
@@ -25,6 +29,9 @@ rule after_cutadapt:
 
 rule sai:
 	input: SAI
+
+rule index:
+    input: INDEX
 
 rule fastqc:
     input: 
@@ -61,16 +68,25 @@ rule fastqc_after_trim:
     shell:
         "fastqc {input} --outdir results/processed/"
 
+rule bwa_index:
+  input:
+    "data/ref/ornek_referans_genom.fna"
+  output:
+    "data/ref/ornek_referans_genom.fna.bwt"
+  shell:
+    "bwa index {input}"
+
 rule bwa_aln:
   input:
     ref= "data/ref/ornek_referans_genom.fna",
+    index= "data/ref/ornek_referans_genom.fna.bwt",
     fastq1= "results/processed/{sample}_1.fastq.gz",
     fastq2= "results/processed/{sample}_2.fastq.gz"
   output:
     sai1= "results/alignment/bwa/{sample}_1_p.sai",
     sai2= "results/alignment/bwa/{sample}_2_p.sai"
   threads: 4
-  shell:
+  shell: 
     """
     bwa aln -t {threads} {input.ref} {input.fastq1} > {output.sai1}
     bwa aln -t {threads} {input.ref} {input.fastq2} > {output.sai2}
