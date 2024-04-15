@@ -43,5 +43,7 @@ rule bwa_aln:
         sai2= "results/alignment/bwa/{sample}_2_p.sai"
     threads: 4
     shell:
-        "bwa aln -j {threads} {input.ref} {input.fastq1} > {output.sai1}
-        bwa aln -j {threads} {input.ref} {input.fastq2} > {output.sai2}"
+       """
+       bwa aln -j {threads} {input.ref} {input.fastq1} > {output.sai1};
+       bwa aln -j {threads} {input.ref} {input.fastq2} > {output.sai2}
+       """
