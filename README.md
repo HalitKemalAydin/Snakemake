@@ -204,19 +204,22 @@ snakemake results/processed/ERR4082748_1.html
 ```
 
 ### 4.Adım: Referans Genom ile Hizalama "BWA"
-Bu aşamada filtrelediğimiz ve kesim yaptığımız fasta dosyalarını "fna" uzantılı referans genom ile hizalıyorum.
+#### A) SAI Dosyalarını Hazırlama:  
+Bu aşamada filtrelediğimiz ve kesim yaptığımız fasta dosyalarını "fna" uzantılı referans genom ile hizalamak için "sai" dosyalarımı oluşturuyorum.
 
 ```
 rule bwa_aln:
-    input:
-        ref= "data/ref/ornek_referans_genom.fna",
-        fastq1= "results/processed/{sample}_1.fastq.gz",
-        fastq2= "results/processed/{sample}_2.fastq.gz"
-    output:
-        sai1= "results/alignment/bwa/{sample}_1_p.sai",
-        sai2= "results/alignment/bwa/{sample}_2_p.sai"
-    threads: 4
-    shell:
-        "bwa aln -j {threads} {input.ref} {input.fastq1} > {output.sai1}
-        bwa aln -j {threads} {input.ref} {input.fastq2} > {output.sai2}"
+  input:
+    ref= "data/ref/ornek_referans_genom.fna",
+    fastq1= "results/processed/{sample}_1.fastq.gz",
+    fastq2= "results/processed/{sample}_2.fastq.gz"
+  output:
+    sai1= "results/alignment/bwa/{sample}_1_p.sai",
+    sai2= "results/alignment/bwa/{sample}_2_p.sai"
+  threads: 4
+  shell:
+    """
+    bwa aln -t {threads} {input.ref} {input.fastq1} > {output.sai1}
+    bwa aln -t {threads} {input.ref} {input.fastq2} > {output.sai2}
+    """
 ```
