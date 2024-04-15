@@ -117,23 +117,12 @@ rule fastqc:
 Snakefile'ı yazdıktan sonra kaydediyorum. 
 İş hattını çalıştırmak için "snakemake" komutu kullanılır. Ancak bu iş hattında snakemake'in oluşturması gereken hedefi belirtmemiz gerekiyor. Hedef olarak çıktı istenilen çıktı dosyası veya dosyaları olmalıdır.
 Ben de 'data' dizini içinde bulunan dosyalardan kullanmak istediğimi çıktı olarak belirtiyorum. 
-Kodumda snakemake'in hangi shell komutlarını çalıştıracağını görmek için '-np' seçeneğini de kullanıyorum.
+
+Kodu çalıştırmak için;
 
 ```
-snakmake results/ERR4082748_1.html
+snakemake results/ERR4082748_1.html
 ```
-
-![alt text](images/ERR4082748_1.html.png)
-
-Kodu bir de normal çalıştırıyorum.
-
-```
-snakemake -np results/ERR4082748_1.html
-```
-
-İşte Fastqc işlem sonucumuz.
-
-![alt text](images/ERR4082748fastqc_1.png)
 
 # Hizalama İş Hattı / Sequence Pipeline
 
