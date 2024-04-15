@@ -1,11 +1,12 @@
 
+
 PREPROCESS=["results/fastqc-raw/ERR4082748_1.html", "results/fastqc-raw/ERR4082748_2.html", "results/fastqc-raw/ERR4082748_1.zip", "results/fastqc-raw/ERR4082748_2.zip"]
 
 CUTADAPT=["results/processed/ERR4082748_1.fastq.gz","results/processed/ERR4082748_2.fastq.gz"]
 
 AFTER_CUTADAPT=["results/processed/ERR4082748_1.html", "results/processed/ERR4082748_2.html", "results/processed/ERR4082748_1.zip", "results/processed/ERR4082748_2.zip"]
 
-SAI=["results/alignment/ERR4082748_1_p.sai", "results/alignment/ERR4082748_2_p.sai"]
+SAI=["results/alignment/bwa/ERR4082748_1_p.sai", "results/alignment/bwa/ERR4082748_2_p.sai"]
 
 rule all:
 	input:
@@ -35,6 +36,8 @@ rule fastqc:
         "results/fastqc-raw/{sample}_1.zip",
         "results/fastqc-raw/{sample}_2.html",
         "results/fastqc-raw/{sample}_2.zip"
+	conda:
+	    "../envs/fastqc.yaml"
     shell:
         "fastqc {input} --outdir results/fastqc-raw"
 
@@ -62,16 +65,16 @@ rule fastqc_after_trim:
         "fastqc {input} --outdir results/processed/"
 
 rule bwa_aln:
-  input:
-    ref= "data/ref/ornek_referans_genom.fna",
-    fastq1= "results/processed/{sample}_1.fastq.gz",
-    fastq2= "results/processed/{sample}_2.fastq.gz"
-  output:
-    sai1= "results/alignment/{sample}_1_p.sai",
-    sai2= "results/alignment/{sample}_2_p.sai"
-  threads: 4
-  shell:
-    """
-    bwa aln -t {threads} {input.ref} {input.fastq1} > {output.sai1}
-    bwa aln -t {threads} {input.ref} {input.fastq2} > {output.sai2}
-    """
+    input:
+        ref= "data/ref/ornek_referans_genom.fna",
+        fastq1= "results/processed/{sample}_1.fastq.gz",
+        fastq2= "results/processed/{sample}_2.fastq.gz"
+    output:
+        sai1= "results/alignment/bwa/{sample}_1_p.sai",
+        sai2= "results/alignment/bwa/{sample}_2_p.sai"
+    threads: 4
+    shell:
+        """
+		bwa aln -j {threads} {input.ref} {input.fastq1} > {output.sai1}
+        bwa aln -j {threads} {input.ref} {input.fastq2} > {output.sai2}
+		"""
