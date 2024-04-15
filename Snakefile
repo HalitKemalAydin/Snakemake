@@ -5,7 +5,7 @@ CUTADAPT=["results/processed/ERR4082748_1.fastq.gz","results/processed/ERR408274
 
 AFTER_CUTADAPT=["results/processed/ERR4082748_1.html", "results/processed/ERR4082748_2.html", "results/processed/ERR4082748_1.zip", "results/processed/ERR4082748_2.zip"]
 
-SAI=["results/alignment/ERR4082748_1_p.sai", "results/alignment/ERR4082748_2_p.sai"]
+SAI=["results/alignment/bwa/ERR4082748_1_p.sai", "results/alignment/bwa/ERR4082748_2_p.sai"]
 
 rule all:
 	input:
@@ -67,8 +67,8 @@ rule bwa_aln:
     fastq1= "results/processed/{sample}_1.fastq.gz",
     fastq2= "results/processed/{sample}_2.fastq.gz"
   output:
-    sai1= "results/alignment/{sample}_1_p.sai",
-    sai2= "results/alignment/{sample}_2_p.sai"
+    sai1= "results/alignment/bwa/{sample}_1_p.sai",
+    sai2= "results/alignment/bwa/{sample}_2_p.sai"
   threads: 4
   shell:
     """
