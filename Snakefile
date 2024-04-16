@@ -126,7 +126,7 @@ rule bwa_sampe:
     threads: 4
     shell:
         """
-        bwa sampe {input.ref} {input.sai1} {input.sai2} {input.fastq1} {input.fastq2} | samtools view -F2 -q30 -Sb > {output}
+        bwa sampe {input.ref} {input.sai1} {input.sai2} {input.fastq1} {input.fastq2} > {output}
         """
 
 rule samtools_sort:

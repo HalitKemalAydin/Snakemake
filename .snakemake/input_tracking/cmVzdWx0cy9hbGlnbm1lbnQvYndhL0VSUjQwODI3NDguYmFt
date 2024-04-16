@@ -1,0 +1,5 @@
+data/ref/ornek_referans_genom.fna
+results/alignment/bwa/ERR4082748_1_p.sai
+results/alignment/bwa/ERR4082748_2_p.sai
+results/processed/ERR4082748_1.fastq.gz
+results/processed/ERR4082748_2.fastq.gz

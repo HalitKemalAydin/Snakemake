@@ -193,8 +193,26 @@ snakemake results/processed/ERR4082748_1.html
 ```
 
 ### 4.Adım: Referans Genom ile Hizalama "BWA"
-#### A) SAI Dosyalarını Hazırlama:  
-Bu aşamada filtrelediğimiz ve kesim yaptığımız fasta dosyalarını "fna" uzantılı referans genom ile hizalamak için önce "sai" dosyalarımı oluşturuyorum.
+#### A) Referans İndeksleme:
+Öncelikle hizalamayı gerçekleştirebilmek için referans genomu indeksliyorum.
+
+```
+rule bwa_index:
+  input:
+    "data/ref/ornek_referans_genom.fna"
+  output:
+    "data/ref/ornek_referans_genom.fna.bwt"
+  shell:
+    "bwa index {input}"
+```
+Kodu çalıştırmak için;
+
+```
+snakemake data/ref/ornek_referans_genom.fna.bwt
+```
+
+#### B) SAI Dosyalarını Hazırlama:  
+Bu aşamada filtrelediğimiz ve kesim yaptığımız fasta dosyalarını, indekslenmiş referans genom ile hizalamak için "sai" dosyalarını oluşturuyorum.
 
 ```
 rule bwa_aln:
@@ -218,4 +236,81 @@ Kodu çalıştırmak için;
 snakemake results/alignment/bwa/ERR4082748_1_p.sai
 ```
 
-#### B)
+#### C) BAM Oluşturma:
+Sonra referans genom, ileri geri okumalar ve sai dosyalarını kullanarak hizalama sonucunu BAM çıktısı olarak çıkarıyorum.
+
+```
+rule bwa_sampe:
+    input:
+        ref= "data/ref/ornek_referans_genom.fna",
+        sai1= "results/alignment/bwa/{sample}_1_p.sai",
+        sai2= "results/alignment/bwa/{sample}_2_p.sai",
+        fastq1= "results/processed/{sample}_1.fastq.gz",
+        fastq2= "results/processed/{sample}_2.fastq.gz"
+    output:
+        "results/alignment/bwa/{sample}.bam"
+    threads: 4
+    shell:
+        """
+        bwa sampe {input.ref} {input.sai1} {input.sai2} {input.fastq1} {input.fastq2} > {output}
+        """
+```
+Kodu çalıştırmak için;
+
+```
+snakemake results/alignment/bwa/ERR4082748.bam
+```
+
+#### D) BAM Sıralama:
+BAM çıktısını varyant çağrısı için hazırlıyorum; Önce sıralıyorum.
+
+```
+rule samtools_sort:
+    input:
+        "results/alignment/bwa/{sample}.bam"
+    output:
+        "results/alignment/bwa/{sample}.sorted.bam"
+    shell:
+        "samtools sort {input} -o {output}"
+```
+Kodu çalıştırmak için;
+
+```
+snakemake results/alignment/bwa/ERR4082748.sorted.bam
+```
+
+#### E) BAM İndeksleme:
+Sonra ise indeksliyorum.
+
+```
+rule samtools_index:
+    input:
+        "results/alignment/bwa/{sample}.sorted.bam"
+    output:
+        "results/alignment/bwa/{sample}.sorted.bam.bai"
+    shell:
+        "samtools index {input}"
+```
+Kodu çalıştırmak için;
+
+```
+snakemake results/alignment/bwa/ERR4082748.sorted.bam.bai
+```
+
+#### F) BAM SAM Dönüşümü:
+BAM dosyasını inceleyebilmek için SAM dosyasına çeviriyorum.
+
+```
+rule samtools_view:
+    input:
+        "results/alignment/bwa/{sample}.sorted.bam"
+    output:
+        "results/alignment/bwa/{sample}.sam"
+    shell:
+        "samtools view -h {input} > {output}"
+```
+Kodu çalıştırmak için;
+
+```
+snakemake results/alignment/bwa/ERR4082748.sam
+```
