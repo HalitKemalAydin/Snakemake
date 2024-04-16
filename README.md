@@ -262,7 +262,7 @@ snakemake results/alignment/bwa/ERR4082748.bam
 ```
 
 #### D) BAM Sıralama:
-BAM çıktısını varyant çağrısı için hazırlıyorum; Önce sıralıyorum.
+BAM çıktısını varyant çağrısı için sıralıyorum.
 
 ```
 rule samtools_sort:
@@ -279,25 +279,7 @@ Kodu çalıştırmak için;
 snakemake results/alignment/bwa/ERR4082748.sorted.bam
 ```
 
-#### E) BAM İndeksleme:
-Sonra ise indeksliyorum.
-
-```
-rule samtools_index:
-    input:
-        "results/alignment/bwa/{sample}.sorted.bam"
-    output:
-        "results/alignment/bwa/{sample}.sorted.bam.bai"
-    shell:
-        "samtools index {input}"
-```
-Kodu çalıştırmak için;
-
-```
-snakemake results/alignment/bwa/ERR4082748.sorted.bam.bai
-```
-
-#### F) BAM SAM Dönüşümü:
+#### E) BAM SAM Dönüşümü:
 BAM dosyasını inceleyebilmek için SAM dosyasına çeviriyorum.
 
 ```
@@ -313,4 +295,22 @@ Kodu çalıştırmak için;
 
 ```
 snakemake results/alignment/bwa/ERR4082748.sam
+```
+
+### Varyant Çağırma:
+Sıralanan BAM dosyası ile varyant çağırıyorum.
+
+```
+rule variant_calling:
+    input:
+        "results/alignment/bwa/{sample}.sorted.bam"
+    output:
+        "results/variants/{sample}.vcf"
+    shell:
+        "samtools mpileup -uf data/ref/ornek_referans_genom.fna {input} | bcftools call -cv - > {output}"
+```
+Kodu çalıştırmak için;
+
+```
+snakemake results/variants/ERR4082748.vcf
 ```

@@ -13,21 +13,21 @@ SAMPE=["results/alignment/bwa/ERR4082748.bam"]
 
 SORT=["results/alignment/bwa/ERR4082748.sorted.bam"]
 
-SINDEX=["results/alignment/bwa/ERR4082748.sorted.bam.bai"]
-
 VIEW=["results/alignment/bwa/ERR4082748.sam"]
+
+VARIANT=["results/variants/ERR4082748.vcf"]
 
 rule all:
 	input: 
            PREPROCESS,
            CUTADAPT,
            AFTER_CUTADAPT,
+           INDEX,
            SAI,
            SAMPE,
            SORT,
-           SINDEX,
-           VIEW
-
+           VIEW,
+           VARIANT
 rule preprocess:
     input: PREPROCESS
 
@@ -49,11 +49,11 @@ rule sampe:
 rule sort:
     input: SORT
 
-rule sindex:
-    input: SINDEX
-
 rule view:
     input: VIEW
+
+rule variant:
+    input: VARIANT
 
 rule fastqc:
     input: 
@@ -137,14 +137,6 @@ rule samtools_sort:
     shell:
         "samtools sort {input} -o {output}"
 
-rule samtools_index:
-    input:
-        "results/alignment/bwa/{sample}.sorted.bam"
-    output:
-        "results/alignment/bwa/{sample}.sorted.bam.bai"
-    shell:
-        "samtools index {input}"
-
 rule samtools_view:
     input:
         "results/alignment/bwa/{sample}.sorted.bam"
@@ -152,3 +144,11 @@ rule samtools_view:
         "results/alignment/bwa/{sample}.sam"
     shell:
         "samtools view -h {input} > {output}"
+
+rule variant_calling:
+    input:
+        "results/alignment/bwa/{sample}.sorted.bam"
+    output:
+        "results/variants/{sample}.vcf"
+    shell:
+        "samtools mpileup -uf data/ref/ornek_referans_genom.fna {input} | bcftools call -cv - > {output}"
