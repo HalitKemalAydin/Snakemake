@@ -316,7 +316,8 @@ snakemake results/variants/ERR4082748.vcf
 ```
 
 
-`rule all:
+```
+rule all:
     input:
         expand("results/fastqc-raw/{sample}_1.html", sample=SAMPLES),
         expand("results/fastqc-raw/{sample}_2.html", sample=SAMPLES),
@@ -329,4 +330,5 @@ snakemake results/variants/ERR4082748.vcf
         expand("results/processed/{sample}_1.zip", sample=SAMPLES),
         expand("results/processed/{sample}_2.zip", sample=SAMPLES),
         expand("results/alignment/bwa/{sample}_1_p.sai", sample=SAMPLES),
-        expand("results/alignment/bwa/{sample}_2_p.sai", sample=SAMPLES)`
+        expand("results/alignment/bwa/{sample}_2_p.sai", sample=SAMPLES)
+```
