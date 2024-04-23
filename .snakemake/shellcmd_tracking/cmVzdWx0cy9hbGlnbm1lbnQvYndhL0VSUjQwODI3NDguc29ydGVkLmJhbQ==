@@ -1,1 +1,0 @@
-samtools sort results/alignment/bwa/ERR4082748.bam -o results/alignment/bwa/ERR4082748.sorted.bam

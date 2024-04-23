@@ -1,4 +1,0 @@
-
-    bwa aln -t 1 data/ref/ornek_referans_genom.fna results/processed/ERR4082748_1.fastq.gz > results/alignment/bwa/ERR4082748_1_p.sai
-    bwa aln -t 1 data/ref/ornek_referans_genom.fna results/processed/ERR4082748_2.fastq.gz > results/alignment/bwa/ERR4082748_2_p.sai
-    

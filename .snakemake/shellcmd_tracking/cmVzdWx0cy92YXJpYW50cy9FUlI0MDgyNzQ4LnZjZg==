@@ -1,1 +1,0 @@
-samtools mpileup -uf data/ref/ornek_referans_genom.fna results/alignment/bwa/ERR4082748.sorted.bam | bcftools call -cv - > results/variants/ERR4082748.vcf
