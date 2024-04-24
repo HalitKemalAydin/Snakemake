@@ -314,7 +314,7 @@ Kodu çalıştırmak için;
 ```
 snakemake results/variants/ERR4082748.vcf
 ```
-# Bu işlemlerimin hepsine "wildcard" atıyorum;
+# Pipeline'a "WILDCARD" Tanımlama;
 
 ```
 PREPROCESS=["results/fastqc-raw/ERR4082748_1.html", "results/fastqc-raw/ERR4082748_2.html", "results/fastqc-raw/ERR4082748_1.zip", "results/fastqc-raw/ERR4082748_2.zip"]
