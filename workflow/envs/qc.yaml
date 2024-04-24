@@ -1,0 +1,6 @@
+name: qc
+channels:
+  - bioconda
+dependencies:
+  - fastqc
+  - cutadapt
