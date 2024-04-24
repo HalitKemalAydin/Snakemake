@@ -1,5 +1,6 @@
+SAMPLE="ERR4082748"
 
-PREPROCESS=["results/fastqc-raw/ERR4082748_1_fastqc.html", "results/fastqc-raw/ERR4082748_2_fastqc.html", "results/fastqc-raw/ERR4082748_1_fastqc.zip", "results/fastqc-raw/ERR4082748_2_fastqc.zip"]
+PREPROCESS=expand(["results/fastqc-raw/{sample}_1_fastqc.html", "results/fastqc-raw/{sample}_2_fastqc.html", "results/fastqc-raw/{sample}_1_fastqc.zip", "results/fastqc-raw/{sample}_2_fastqc.zip"], sample=SAMPLE)
 
 CUTADAPT=["results/processed/ERR4082748_1.fastq.gz","results/processed/ERR4082748_2.fastq.gz"]
 
