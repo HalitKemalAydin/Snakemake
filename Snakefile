@@ -1,9 +1,9 @@
 
-PREPROCESS=["results/fastqc-raw/ERR4082748_1.html", "results/fastqc-raw/ERR4082748_2.html", "results/fastqc-raw/ERR4082748_1.zip", "results/fastqc-raw/ERR4082748_2.zip"]
+PREPROCESS=["results/fastqc-raw/ERR4082748_1_fastqc.html", "results/fastqc-raw/ERR4082748_2_fastqc.html", "results/fastqc-raw/ERR4082748_1_fastqc.zip", "results/fastqc-raw/ERR4082748_2_fastqc.zip"]
 
 CUTADAPT=["results/processed/ERR4082748_1.fastq.gz","results/processed/ERR4082748_2.fastq.gz"]
 
-AFTER_CUTADAPT=["results/processed/ERR4082748_1.html", "results/processed/ERR4082748_2.html", "results/processed/ERR4082748_1.zip", "results/processed/ERR4082748_2.zip"]
+AFTER_CUTADAPT=["results/processed/ERR4082748_1_fastqc.html", "results/processed/ERR4082748_2_fastqc.html", "results/processed/ERR4082748_1_fastqc.zip", "results/processed/ERR4082748_2_fastqc.zip"]
 
 INDEX=["data/ref/ornek_referans_genom.fna.bwt"]
 
@@ -60,10 +60,10 @@ rule fastqc:
         "data/raw/{sample}_1.fastq.gz",
         "data/raw/{sample}_2.fastq.gz"
     output:
-        "results/fastqc-raw/{sample}_1.html",
-        "results/fastqc-raw/{sample}_1.zip",
-        "results/fastqc-raw/{sample}_2.html",
-        "results/fastqc-raw/{sample}_2.zip"
+        "results/fastqc-raw/{sample}_1_fastqc.html",
+        "results/fastqc-raw/{sample}_1_fastqc.zip",
+        "results/fastqc-raw/{sample}_2_fastqc.html",
+        "results/fastqc-raw/{sample}_2_fastqc.zip"
     shell:
         "fastqc {input} --outdir results/fastqc-raw"
 
@@ -83,10 +83,10 @@ rule fastqc_after_trim:
         "results/processed/{sample}_1.fastq.gz",
         "results/processed/{sample}_2.fastq.gz"
     output:
-        "results/processed/{sample}_1.html",
-        "results/processed/{sample}_1.zip",
-        "results/processed/{sample}_2.html",
-        "results/processed/{sample}_2.zip"
+        "results/processed/{sample}_1_fastqc.html",
+        "results/processed/{sample}_1_fastqc.zip",
+        "results/processed/{sample}_2_fastqc.html",
+        "results/processed/{sample}_2_fastqc.zip"
     shell:
         "fastqc {input} --outdir results/processed/"
 
