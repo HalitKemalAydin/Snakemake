@@ -314,3 +314,70 @@ Kodu çalıştırmak için;
 ```
 snakemake results/variants/ERR4082748.vcf
 ```
+# Bu işlemlerimin hepsine "wildcard" atıyorum;
+
+```
+PREPROCESS=["results/fastqc-raw/ERR4082748_1.html", "results/fastqc-raw/ERR4082748_2.html", "results/fastqc-raw/ERR4082748_1.zip", "results/fastqc-raw/ERR4082748_2.zip"]
+
+CUTADAPT=["results/processed/ERR4082748_1.fastq.gz","results/processed/ERR4082748_2.fastq.gz"]
+
+AFTER_CUTADAPT=["results/processed/ERR4082748_1.html", "results/processed/ERR4082748_2.html", "results/processed/ERR4082748_1.zip", "results/processed/ERR4082748_2.zip"]
+
+INDEX=["data/ref/ornek_referans_genom.fna.bwt"]
+
+SAI=["results/alignment/bwa/ERR4082748_1_p.sai", "results/alignment/bwa/ERR4082748_2_p.sai"]
+
+SAMPE=["results/alignment/bwa/ERR4082748.bam"]
+
+SORT=["results/alignment/bwa/ERR4082748.sorted.bam"]
+
+VIEW=["results/alignment/bwa/ERR4082748.sam"]
+
+VARIANT=["results/variants/ERR4082748.vcf"]
+
+rule all:
+	input: 
+           PREPROCESS,
+           CUTADAPT,
+           AFTER_CUTADAPT,
+           INDEX,
+           SAI,
+           SAMPE,
+           SORT,
+           VIEW,
+           VARIANT
+rule preprocess:
+    input: PREPROCESS
+
+rule process:
+	input: CUTADAPT
+
+rule after_cutadapt:
+	input: AFTER_CUTADAPT
+
+rule index:
+    input: INDEX
+
+rule sai:
+	input: SAI
+
+rule sampe:
+    input: SAMPE
+
+rule sort:
+    input: SORT
+
+rule view:
+    input: VIEW
+
+rule variant:
+    input: VARIANT
+```
+
+Bu sayede pipeline'ı çalıştırırken wildcardları kullanabileceğim.
+
+Örnek olarak;
+
+```
+snakemake variant
+```
