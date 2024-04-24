@@ -13,8 +13,6 @@ SAMPE=["results/alignment/bwa/ERR4082748.bam"]
 
 SORT=["results/alignment/bwa/ERR4082748.sorted.bam"]
 
-VIEW=["results/alignment/bwa/ERR4082748.sam"]
-
 VARIANT=["results/variants/ERR4082748.vcf"]
 
 rule all:
@@ -26,7 +24,6 @@ rule all:
            SAI,
            SAMPE,
            SORT,
-           VIEW,
            VARIANT
 rule preprocess:
     input: PREPROCESS
@@ -48,9 +45,6 @@ rule sampe:
 
 rule sort:
     input: SORT
-
-rule view:
-    input: VIEW
 
 rule variant:
     input: VARIANT
@@ -136,14 +130,6 @@ rule samtools_sort:
         "results/alignment/bwa/{sample}.sorted.bam"
     shell:
         "samtools sort {input} -o {output}"
-
-rule samtools_view:
-    input:
-        "results/alignment/bwa/{sample}.sorted.bam"
-    output:
-        "results/alignment/bwa/{sample}.sam"
-    shell:
-        "samtools view -h {input} > {output}"
 
 rule variant_calling:
     input:
