@@ -59,6 +59,8 @@ rule fastqc:
         "results/fastqc-raw/{sample}_1_fastqc.zip",
         "results/fastqc-raw/{sample}_2_fastqc.html",
         "results/fastqc-raw/{sample}_2_fastqc.zip"
+    conda:
+        "workflow/envs/qc.yaml"
     shell:
         "fastqc {input} --outdir results/fastqc-raw"
 
@@ -70,6 +72,8 @@ rule cutadapt:
         R1="results/processed/{sample}_1.fastq.gz",
         R2="results/processed/{sample}_2.fastq.gz"
     threads: 4
+    conda:
+        "workflow/envs/qc.yaml"
     shell:
         "cutadapt -q 20 -m 10 --trim-n -Z -j {threads} -a AGATCGGAAGAG -A AGATCGGAAGAG -o {output.R1} -p {output.R2} {input}"
 
@@ -82,6 +86,8 @@ rule fastqc_after_trim:
         "results/processed/{sample}_1_fastqc.zip",
         "results/processed/{sample}_2_fastqc.html",
         "results/processed/{sample}_2_fastqc.zip"
+    conda:
+        "workflow/envs/qc.yaml"
     shell:
         "fastqc {input} --outdir results/processed/"
 
