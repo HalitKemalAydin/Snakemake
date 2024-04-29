@@ -14,7 +14,7 @@ SAMPE=expand(["results/alignment/bwa/{sample}.bam"], sample=SAMPLE)
 
 SORT=expand(["results/alignment/bwa/{sample}.sorted.bam"], sample=SAMPLE)
 
-VARIANT=expand(["results/variants/ERR4082748.vcf"], sample=SAMPLE)
+VARIANT=expand(["results/variants/{sample}.vcf"], sample=SAMPLE)
 
 rule all:
 	input: 
@@ -46,7 +46,7 @@ rule fastqc:
         "results/fastqc-raw/{sample}_2_fastqc.html",
         "results/fastqc-raw/{sample}_2_fastqc.zip"
     conda:
-        "workflow/envs/qc.yaml"
+        "envs/qc.yaml"
     shell:
         "fastqc {input} --outdir results/fastqc-raw"
 
@@ -59,7 +59,7 @@ rule cutadapt:
         R2="results/processed/{sample}_2.fastq.gz"
     threads: 4
     conda:
-        "workflow/envs/qc.yaml"
+        "envs/qc.yaml"
     shell:
         "cutadapt -q 20 -m 10 --trim-n -Z -j {threads} -a AGATCGGAAGAG -A AGATCGGAAGAG -o {output.R1} -p {output.R2} {input}"
 
@@ -73,7 +73,7 @@ rule fastqc_after_trim:
         "results/processed/{sample}_2_fastqc.html",
         "results/processed/{sample}_2_fastqc.zip"
     conda:
-        "workflow/envs/qc.yaml"
+        "envs/qc.yaml"
     shell:
         "fastqc {input} --outdir results/processed/"
 
@@ -82,6 +82,8 @@ rule bwa_index:
     "data/ref/ornek_referans_genom.fna"
   output:
     "data/ref/ornek_referans_genom.fna.bwt"
+  conda:
+    "envs/bwa.yaml"
   shell:
     "bwa index {input}"
 
@@ -95,6 +97,8 @@ rule bwa_aln:
     sai1= "results/alignment/bwa/{sample}_1_p.sai",
     sai2= "results/alignment/bwa/{sample}_2_p.sai"
   threads: 4
+  conda:
+    "envs/bwa.yaml"
   shell: 
     """
     bwa aln -t {threads} {input.ref} {input.fastq1} > {output.sai1}
@@ -111,6 +115,8 @@ rule bwa_sampe:
     output:
         "results/alignment/bwa/{sample}.bam"
     threads: 4
+    conda:
+        "envs/bwa.yaml"
     shell:
         """
         bwa sampe {input.ref} {input.sai1} {input.sai2} {input.fastq1} {input.fastq2} > {output}
@@ -121,6 +127,8 @@ rule samtools_sort:
         "results/alignment/bwa/{sample}.bam"
     output:
         "results/alignment/bwa/{sample}.sorted.bam"
+    conda:
+        "envs/bwa.yaml"
     shell:
         "samtools sort {input} -o {output}"
 
@@ -129,5 +137,7 @@ rule variant_calling:
         "results/alignment/bwa/{sample}.sorted.bam"
     output:
         "results/variants/{sample}.vcf"
+    conda:
+        "envs/bwa.yaml"
     shell:
         "samtools mpileup -uf data/ref/ornek_referans_genom.fna {input} | bcftools call -cv - > {output}"
