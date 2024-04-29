@@ -132,23 +132,23 @@ snakemake results/ERR4082748_1.html
 ```
 rule fastqc:
     input: 
-        "../data/raw/{sample}_1.fastq.gz",
-        "../data/raw/{sample}_2.fastq.gz"
+        "data/raw/{sample}_1.fastq.gz",
+        "data/raw/{sample}_2.fastq.gz"
     output:
-        "../results/fastqc-raw/{sample}_1_fastqc.html",
-        "../results/fastqc-raw/{sample}_1_fastqc.zip",
-        "../results/fastqc-raw/{sample}_2_fastqc.html",
-        "../results/fastqc-raw/{sample}_2_fastqc.zip"
+        "results/fastqc-raw/{sample}_1_fastqc.html",
+        "results/fastqc-raw/{sample}_1_fastqc.zip",
+        "results/fastqc-raw/{sample}_2_fastqc.html",
+        "results/fastqc-raw/{sample}_2_fastqc.zip"
     conda:
         "workflow/envs/qc.yaml"
     shell:
-        "fastqc {input} --outdir ../results/fastqc-raw"
+        "fastqc {input} --outdir results/fastqc-raw"
 
 ```
 Kodu çalıştırmak için;
 
 ```
-snakemake ../results/fastqc-raw/ERR4082748_1.html
+snakemake results/fastqc-raw/ERR4082748_1.html
 ```
 
 ### 2.Adım: Adaptör Kesimi ve Filtreleme "Cutadapt"
@@ -157,11 +157,11 @@ Bu aşamada ise kontrol ettiğimiz fasta dosyalarını filtreleyip adaptörleri 
 ```
 rule cutadapt:
     input:
-        "../data/raw/{sample}_1.fastq.gz",
-        "../data/raw/{sample}_2.fastq.gz"
+        "data/raw/{sample}_1.fastq.gz",
+        "data/raw/{sample}_2.fastq.gz"
     output:
-        R1="../results/processed/{sample}_1.fastq.gz",
-        R2="../results/processed/{sample}_2.fastq.gz"
+        R1="results/processed/{sample}_1.fastq.gz",
+        R2="results/processed/{sample}_2.fastq.gz"
     threads: 4
     conda:
         "workflow/envs/qc.yaml"
@@ -171,7 +171,7 @@ rule cutadapt:
 Kodu çalıştırmak için;
 
 ```
-snakemake ../results/processed/ERR4082748_1.fastq.gz
+snakemake results/processed/ERR4082748_1.fastq.gz
 ```
 
 ### 3.Adım: Kesim Sonrası Kalite Kontrol "Fastqc"
@@ -180,22 +180,22 @@ Bu aşamada filtreleme ve kesimden sonra fasta dosyalarımızın son halinin kal
 ```
 rule fastqc_after_trim:
     input: 
-        "../results/processed/{sample}_1.fastq.gz",
-        "../results/processed/{sample}_2.fastq.gz"
+        "results/processed/{sample}_1.fastq.gz",
+        "results/processed/{sample}_2.fastq.gz"
     output:
-        "../results/processed/{sample}_1_fastqc.html",
-        "../results/processed/{sample}_1_fastqc.zip",
-        "../results/processed/{sample}_2_fastqc.html",
-        "../results/processed/{sample}_2_fastqc.zip"
+        "results/processed/{sample}_1_fastqc.html",
+        "results/processed/{sample}_1_fastqc.zip",
+        "results/processed/{sample}_2_fastqc.html",
+        "results/processed/{sample}_2_fastqc.zip"
     conda:
         "workflow/envs/qc.yaml"
     shell:
-        "fastqc {input} --outdir ../results/processed/"
+        "fastqc {input} --outdir results/processed/"
 ```
 Kodu çalıştırmak için;
 
 ```
-snakemake ../results/processed/ERR4082748_1.html
+snakemake results/processed/ERR4082748_1.html
 ```
 
 ### 4.Adım: Referans Genom ile Hizalama "BWA"
@@ -205,16 +205,16 @@ snakemake ../results/processed/ERR4082748_1.html
 ```
 rule bwa_index:
   input:
-    "../data/ref/ornek_referans_genom.fna"
+    "data/ref/ornek_referans_genom.fna"
   output:
-    "../data/ref/ornek_referans_genom.fna.bwt"
+    "data/ref/ornek_referans_genom.fna.bwt"
   shell:
     "bwa index {input}"
 ```
 Kodu çalıştırmak için;
 
 ```
-snakemake ../data/ref/ornek_referans_genom.fna.bwt
+snakemake data/ref/ornek_referans_genom.fna.bwt
 ```
 
 #### B) SAI Dosyalarını Hazırlama:  
@@ -223,13 +223,13 @@ Bu aşamada filtrelediğimiz ve kesim yaptığımız fasta dosyalarını, indeks
 ```
 rule bwa_aln:
   input:
-    ref= "../data/ref/ornek_referans_genom.fna",
-    index= "../data/ref/ornek_referans_genom.fna.bwt",
-    fastq1= "../results/processed/{sample}_1.fastq.gz",
-    fastq2= "../results/processed/{sample}_2.fastq.gz"
+    ref= "data/ref/ornek_referans_genom.fna",
+    index= "data/ref/ornek_referans_genom.fna.bwt",
+    fastq1= "results/processed/{sample}_1.fastq.gz",
+    fastq2= "results/processed/{sample}_2.fastq.gz"
   output:
-    sai1= "../results/alignment/bwa/{sample}_1_p.sai",
-    sai2= "../results/alignment/bwa/{sample}_2_p.sai"
+    sai1= "results/alignment/bwa/{sample}_1_p.sai",
+    sai2= "results/alignment/bwa/{sample}_2_p.sai"
   threads: 4
   shell: 
     """
@@ -240,7 +240,7 @@ rule bwa_aln:
 Kodu çalıştırmak için;
 
 ```
-snakemake ../results/alignment/bwa/ERR4082748_1_p.sai
+snakemake results/alignment/bwa/ERR4082748_1_p.sai
 ```
 
 #### C) BAM Oluşturma:
@@ -249,13 +249,13 @@ Sonra referans genom, ileri geri okumalar ve sai dosyalarını kullanarak hizala
 ```
 rule bwa_sampe:
     input:
-        ref= "../data/ref/ornek_referans_genom.fna",
-        sai1= "../results/alignment/bwa/{sample}_1_p.sai",
-        sai2= "../results/alignment/bwa/{sample}_2_p.sai",
-        fastq1= "../results/processed/{sample}_1.fastq.gz",
-        fastq2= "../results/processed/{sample}_2.fastq.gz"
+        ref= "data/ref/ornek_referans_genom.fna",
+        sai1= "results/alignment/bwa/{sample}_1_p.sai",
+        sai2= "results/alignment/bwa/{sample}_2_p.sai",
+        fastq1= "results/processed/{sample}_1.fastq.gz",
+        fastq2= "results/processed/{sample}_2.fastq.gz"
     output:
-        "../results/alignment/bwa/{sample}.bam"
+        "results/alignment/bwa/{sample}.bam"
     threads: 4
     shell:
         """
@@ -265,7 +265,7 @@ rule bwa_sampe:
 Kodu çalıştırmak için;
 
 ```
-snakemake ../results/alignment/bwa/ERR4082748.bam
+snakemake results/alignment/bwa/ERR4082748.bam
 ```
 
 #### D) BAM Sıralama:
@@ -274,16 +274,16 @@ BAM çıktısını varyant çağrısı için sıralıyorum.
 ```
 rule samtools_sort:
     input:
-        "../results/alignment/bwa/{sample}.bam"
+        "results/alignment/bwa/{sample}.bam"
     output:
-        "../results/alignment/bwa/{sample}.sorted.bam"
+        "results/alignment/bwa/{sample}.sorted.bam"
     shell:
         "samtools sort {input} -o {output}"
 ```
 Kodu çalıştırmak için;
 
 ```
-snakemake ../results/alignment/bwa/ERR4082748.sorted.bam
+snakemake results/alignment/bwa/ERR4082748.sorted.bam
 ```
 
 ### Varyant Çağırma:
@@ -292,37 +292,37 @@ Sıralanan BAM dosyası ile varyant çağırıyorum.
 ```
 rule variant_calling:
     input:
-        "../results/alignment/bwa/{sample}.sorted.bam"
+        "results/alignment/bwa/{sample}.sorted.bam"
     output:
-        "../results/variants/{sample}.vcf"
+        "results/variants/{sample}.vcf"
     shell:
-        "samtools mpileup -uf ../data/ref/ornek_referans_genom.fna {input} | bcftools call -cv - > {output}"
+        "samtools mpileup -uf data/ref/ornek_referans_genom.fna {input} | bcftools call -cv - > {output}"
 ```
 Kodu çalıştırmak için;
 
 ```
-snakemake ../results/variants/ERR4082748.vcf
+snakemake results/variants/ERR4082748.vcf
 ```
 # Pipeline'a "WILDCARD" Tanımlama;
 
 ```
 SAMPLE="ERR4082748"
 
-PREPROCESS=expand(["../results/fastqc-raw/{sample}_1_fastqc.html", "../results/fastqc-raw/{sample}_2_fastqc.html", "../results/fastqc-raw/{sample}_1_fastqc.zip", "../results/fastqc-raw/{sample}_2_fastqc.zip"], sample=SAMPLE)
+PREPROCESS=expand(["results/fastqc-raw/{sample}_1_fastqc.html", "results/fastqc-raw/{sample}_2_fastqc.html", "results/fastqc-raw/{sample}_1_fastqc.zip", "results/fastqc-raw/{sample}_2_fastqc.zip"], sample=SAMPLE)
 
-CUTADAPT=expand(["../results/processed/{sample}_1.fastq.gz","../results/processed/{sample}_2.fastq.gz"], sample=SAMPLE)
+CUTADAPT=expand(["results/processed/{sample}_1.fastq.gz","results/processed/{sample}_2.fastq.gz"], sample=SAMPLE)
 
-AFTER_CUTADAPT=expand(["../results/processed/{sample}_1_fastqc.html", "../results/processed/{sample}_2_fastqc.html", "../results/processed/{sample}_1_fastqc.zip", "../results/processed/{sample}_2_fastqc.zip"], sample=SAMPLE)
+AFTER_CUTADAPT=expand(["results/processed/{sample}_1_fastqc.html", "results/processed/{sample}_2_fastqc.html", "results/processed/{sample}_1_fastqc.zip", "results/processed/{sample}_2_fastqc.zip"], sample=SAMPLE)
 
-INDEX=["../data/ref/ornek_referans_genom.fna.bwt"]
+INDEX=["data/ref/ornek_referans_genom.fna.bwt"]
 
-SAI=expand(["../results/alignment/bwa/{sample}_1_p.sai", "../results/alignment/bwa/{sample}_2_p.sai"], sample=SAMPLE)
+SAI=expand(["results/alignment/bwa/{sample}_1_p.sai", "results/alignment/bwa/{sample}_2_p.sai"], sample=SAMPLE)
 
-SAMPE=expand(["../results/alignment/bwa/{sample}.bam"], sample=SAMPLE)
+SAMPE=expand(["results/alignment/bwa/{sample}.bam"], sample=SAMPLE)
 
-SORT=expand(["../results/alignment/bwa/{sample}.sorted.bam"], sample=SAMPLE)
+SORT=expand(["results/alignment/bwa/{sample}.sorted.bam"], sample=SAMPLE)
 
-VARIANT=expand(["../results/variants/ERR4082748.vcf"], sample=SAMPLE)
+VARIANT=expand(["results/variants/ERR4082748.vcf"], sample=SAMPLE)
 
 rule all:
 	input: 
@@ -351,4 +351,8 @@ Bu sayede pipeline'ı çalıştırırken wildcardları kullanabileceğim.
 
 ```
 snakemake variant
+```
+
+```
+snakemake -s workflow/Snakefile -np
 ```
