@@ -87,6 +87,10 @@ yazıyorum. Bunu kullanmaktaki amaç paketlerin birbirleriyle çakışmasını �
     conda:
         "envs/bwa.yaml"
 ```
+conda komutlu kodumuzu çalıştırmak için ise;
+```
+snakemake all --use-conda
+```
 
 ### Snakemake kurulumu:
 Şimdi 'Conda' kullanarak snakemake'i kuruyorum.
