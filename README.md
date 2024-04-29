@@ -59,7 +59,7 @@ Snakemake, iş paketi yöneticisi (conda) ile entegre olarak çalışabilir. Bu,
 Snakemake aracını kurmak için 'Conda' kullanıyorum. [Conda nedir ve nasıl kullanılır ?](https://github.com/HalitKemalAydin/Conda_Guide)
 
 ### Ortam Oluşturma:
-Snakemake'i kurmak için öncelikle yeni ortam oluşturuyorum.
+#### Snakemake'i kurmak için öncelikle yeni ortam oluşturuyorum.
 
 ```
 conda create -n snakemake
@@ -70,6 +70,24 @@ Ardından oluşturduğum ortama geçiyorum.
 ```
 conda activate snakemake
 ```
+#### "*.yaml" Çevreleri oluşturuyorum.
+".yaml" uzantılı bir dosya oluşturuyorum ve içerisine;
+```
+name: "çevre ismi"
+channels:
+  - "kullanılacak kanal"
+dependencies:
+  - "kullanılacak paketler"
+```
+yazıyorum. Bunu kullanmaktaki amaç paketlerin birbirleriyle çakışmasını önlemek.
+
+.yaml uzantılı çevre dosyalarını hazırladıktan sonra kodumun içerisine entegre ediyorum.
+
+```
+    conda:
+        "envs/bwa.yaml"
+```
+
 ### Snakemake kurulumu:
 Şimdi 'Conda' kullanarak snakemake'i kuruyorum.
 
@@ -351,8 +369,4 @@ Bu sayede pipeline'ı çalıştırırken wildcardları kullanabileceğim.
 
 ```
 snakemake variant
-```
-
-```
-snakemake -s workflow/Snakefile -np
 ```
